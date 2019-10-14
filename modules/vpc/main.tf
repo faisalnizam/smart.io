@@ -5,9 +5,6 @@ resource "aws_vpc" "vpc" {
 
 }
 
-output "vpc_id" {
-  value = "${aws_vpc.vpc.id}"
-}
 
 # Create the IGW
 resource "aws_internet_gateway" "igw" {
@@ -25,9 +22,6 @@ resource "aws_subnet" "public" {
 
 }
 
-output "public_subnets_id" {
-  value = "${join(",", aws_subnet.public.*.id)}"
-}
 
 resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.vpc.id}"
@@ -55,9 +49,6 @@ resource "aws_subnet" "private" {
 
 }
 
-output "private_subnets_id" {
-  value = "${join(",", aws_subnet.private.*.id)}"
-}
 
 resource "aws_route_table" "private" {
   vpc_id = "${aws_vpc.vpc.id}"

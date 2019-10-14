@@ -1,0 +1,78 @@
+******* How TO ******
+
+
+Use the below module definition to initiate the security group within your own code. 
+Ignore the < > within the definition. 
+
+Required Parameters are 
+-----------------------
+
+1. name 
+2. vpc_id 
+3. ingress []
+4. outgress [] 
+5. tags {}
+
+
+Explaination: 
+The variables defined can be send values from another file <main.tf> 
+or they can be defined with some static values like for e.g. 
+
+variable "ingress" {
+  description = "Specifies an ingress rule."
+
+  default = [{
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = "0"
+    protocol    = "-1"
+    to_port     = "0"
+  },
+    {
+      from_port = "0"
+      protocol  = "-1"
+      to_port   = "0"
+      self      = true
+    },
+  ]
+}
+
+variable "egress" {
+  description = "Specifies an ingress rule."
+
+  default = [{
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = "0"
+    protocol    = "-1"
+    to_port     = "0"
+  }]
+}
+
+variable "jenkins_tags" {
+  type = "map"
+
+  default = {
+    "careem:tier"        = "jenkins"
+    "careem:team"        = "devops"
+    "careem:criticality" = "high"
+  }
+}
+
+
+
+Result
+-------- 
+Opens Up Custom Ports Defined 
+1. SSH Port 
+2. Communication Ports to Promotheus 
+
+
+
+module "< your module name >" {
+        source = "./modules/default_sg"
+        name = "${var.app_name}"
+        environment = "${var.environment_name}"
+        from_port    = 10 
+        to_port      = 20 
+        vpc_id = "${module.vpc_subnets.vpc_id}"
+        source_cidr_block = "0.0.0.0/0"
+}

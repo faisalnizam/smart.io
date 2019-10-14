@@ -1,3 +1,10 @@
+variable "region" {
+  default = "eu-west-1"
+}
+
+variable "profile" {
+  default = "smart"
+}
 variable "app_name" {
   default = "smart-devops-test"
 
@@ -36,7 +43,7 @@ variable "ingress" {
     from_port   = "0"
     protocol    = "TCP"
     to_port     = "65535"
-  },
+    },
     {
       from_port = "0"
       protocol  = "-1"
@@ -57,22 +64,26 @@ variable "egress" {
   }]
 }
 
-variable "vpc_id" {}
+variable "vpc_id" {
+  default = ""
+}
 
 variable "vpc_zone_identifier" {
-  type = "list"
+  type    = "list"
+  default = ["subnet-c64a20b0", "subnet-a88930f0", "subnet-a88930f0"]
 }
 
 variable "vpc_zone_identifier_pub" {
-  type = "list"
+  type    = "list"
+  default = ["subnet-73e38805", "subnet-fb1ba5a3", "subnet-c6daa6a2"]
 }
 
 variable "elb_name" {
-  default = "jenkins-elb"
+  default = "smart-elb"
 }
 
 variable "name" {
-  default = "jenkins-im"
+  default = "smart-im"
 }
 
 variable "internal" {
@@ -98,11 +109,11 @@ variable "min_size" {
 }
 
 variable "asg_name" {
-  default = "jenkins-immutable-iac"
+  default = "immutable-iac"
 }
 
 variable "name_prefix" {
-  default = "myconfig-jenkins"
+  default = "myconfig-smart"
 }
 
 variable "ami_id" {}
